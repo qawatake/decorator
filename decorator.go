@@ -1,40 +1,20 @@
 package decorator
 
 import (
-	"go/ast"
-
 	"golang.org/x/tools/go/analysis"
-	"golang.org/x/tools/go/analysis/passes/inspect"
-	"golang.org/x/tools/go/ast/inspector"
 )
 
-const doc = "decorator is ..."
-
-// Analyzer is ...
-var Analyzer = &analysis.Analyzer{
-	Name: "decorator",
-	Doc:  doc,
-	Run:  run,
-	Requires: []*analysis.Analyzer{
-		inspect.Analyzer,
-	},
-}
-
-func run(pass *analysis.Pass) (any, error) {
-	inspect := pass.ResultOf[inspect.Analyzer].(*inspector.Inspector)
-
-	nodeFilter := []ast.Node{
-		(*ast.Ident)(nil),
-	}
-
-	inspect.Preorder(nodeFilter, func(n ast.Node) {
-		switch n := n.(type) {
-		case *ast.Ident:
-			if n.Name == "gopher" {
-				pass.Reportf(n.Pos(), "identifier is gopher")
+func With(decorator func(a *analysis.Analyzer, d analysis.Diagnostic) analysis.Diagnostic) func(a *analysis.Analyzer) *analysis.Analyzer {
+	return func(a *analysis.Analyzer) *analysis.Analyzer {
+		orgRun := a.Run
+		a.Run = func(p *analysis.Pass) (interface{}, error) {
+			orgReport := p.Report
+			p.Report = func(d analysis.Diagnostic) {
+				d = decorator(a, d)
+				orgReport(d)
 			}
+			return orgRun(p)
 		}
-	})
-
-	return nil, nil
+		return a
+	}
 }
