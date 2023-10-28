@@ -18,3 +18,10 @@ func With(decorator func(a *analysis.Analyzer, d analysis.Diagnostic) analysis.D
 		return a
 	}
 }
+
+func WithName() func(a *analysis.Analyzer) *analysis.Analyzer {
+	return With(func(a *analysis.Analyzer, d analysis.Diagnostic) analysis.Diagnostic {
+		d.Message = d.Message + " (" + a.Name + ")"
+		return d
+	})
+}
