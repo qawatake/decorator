@@ -10,7 +10,6 @@ import (
 	"golang.org/x/tools/go/analysis/passes/nilness"
 )
 
-// TestAnalyzer is a test for Analyzer.
 func TestWith(t *testing.T) {
 	testdata := testutil.WithModules(t, analysistest.TestData(), nil)
 	analysistest.Run(t, testdata,
@@ -20,5 +19,12 @@ func TestWith(t *testing.T) {
 				return d
 			},
 		)(nilness.Analyzer),
+		"a")
+}
+
+func TestWithName(t *testing.T) {
+	testdata := testutil.WithModules(t, analysistest.TestData(), nil)
+	analysistest.Run(t, testdata,
+		decorator.WithName()(nilness.Analyzer),
 		"a")
 }
