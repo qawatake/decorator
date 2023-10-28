@@ -26,5 +26,5 @@ func TestWithName(t *testing.T) {
 	testdata := testutil.WithModules(t, analysistest.TestData(), nil)
 	analysistest.Run(t, testdata,
 		decorator.WithName()(nilness.Analyzer),
-		"a")
+		"b")
 }
