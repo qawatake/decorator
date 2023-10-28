@@ -1,8 +1,9 @@
 package decorator_test
 
 import (
-	"decorator"
 	"testing"
+
+	"github.com/qawatake/decorator"
 
 	"github.com/gostaticanalysis/testutil"
 	"golang.org/x/tools/go/analysis"

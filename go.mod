@@ -1,4 +1,4 @@
-module decorator
+module github.com/qawatake/decorator
 
 go 1.21
 

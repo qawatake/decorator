@@ -20,7 +20,7 @@ internal/example/example.go:11:16: 😱 nil dereference in field selection (niln
 package main
 
 import (
-  "decorator"
+  "github.com/qawatake/decorator"
 
   "golang.org/x/tools/go/analysis"
   "golang.org/x/tools/go/analysis/passes/nilness"
