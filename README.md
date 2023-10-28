@@ -31,7 +31,7 @@ func main() {
   unitchecker.Main(
     decorator.With(
       func(a *analysis.Analyzer, d analysis.Diagnostic) analysis.Diagnostic {
-        d.Message = "😱 " + d.Message
+        d.Message = "😱 " + d.Message + " (" + a.Name + ")"
         return d
       },
     )(nilness.Analyzer),
